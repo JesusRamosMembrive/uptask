@@ -1,16 +1,41 @@
 import {Router} from "express";
 import {ProjectController} from "../controllers/ProjectController";
-import {body} from "express-validator";
+import {body, param} from "express-validator";
+import {handleInputErrors} from "../middleware/validation";
 const router = Router();
 
-router.get('/',
-    body('name').notEmpty().withMessage('El nombre del proyecto es obligatorio'),
+router.post('/',
+    body('projectName').notEmpty().withMessage('El nombre del proyecto es obligatorio'),
     body('clientName').notEmpty().withMessage('El nombre del cliente es obligatorio'),
     body('description').notEmpty().withMessage('La descripción del proyecto es obligatoria'),
-    ProjectController.getAllProjects);
+    handleInputErrors,
+    ProjectController.createProject);
 
 
+router.get('/', ProjectController.getAllProjects);
 
-router.post('/', ProjectController.createProject);
+
+router.get('/:id',
+    param('id').isMongoId().withMessage('ID not valid'),
+    handleInputErrors,
+    ProjectController.getProjectByID
+);
+
+
+router.put('/:id',
+    param('id').isMongoId().withMessage('ID not valid'),
+    body('projectName').notEmpty().withMessage('El nombre del proyecto es obligatorio'),
+    body('clientName').notEmpty().withMessage('El nombre del cliente es obligatorio'),
+    body('description').notEmpty().withMessage('La descripción del proyecto es obligatoria'),
+    handleInputErrors,
+    ProjectController.updateProject
+);
+
+router.delete('/:id',
+    param('id').isMongoId().withMessage('ID not valid'),
+    handleInputErrors,
+    ProjectController.deleteProject
+);
+
 
 export default router;
