@@ -1,6 +1,6 @@
 import {Outlet} from 'react-router-dom'
 import Logo from "@/components/Logo.tsx";
-
+import NavMenu from "@/components/NavMenu.tsx";
 
 export const AppLayout = () => {
     return (
@@ -9,8 +9,8 @@ export const AppLayout = () => {
                 <div className={'max-w-screen-2xl mx-auto flex flex-col lg:flex-row justify-between items-center'}>
                     <div className={"w-64"}>
                         <Logo/>
-
                     </div>
+                    <NavMenu/>
                 </div>
             </header>
 
