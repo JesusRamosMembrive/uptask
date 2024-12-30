@@ -1,4 +1,6 @@
-import {Outlet} from 'react-router-dom'
+import {Outlet} from 'react-router-dom';
+import {ToastContainer} from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 import Logo from "@/components/Logo.tsx";
 import NavMenu from "@/components/NavMenu.tsx";
 
@@ -23,6 +25,17 @@ export const AppLayout = () => {
                     Todos los derechos reservados &copy; {new Date().getFullYear()}
                 </p>
             </footer>
+
+            <ToastContainer
+                autoClose={2000}
+                hideProgressBar={false}
+                newestOnTop={true}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss={false}
+                draggable
+                pauseOnHover={false}
+            />
         </>
     );
 };
