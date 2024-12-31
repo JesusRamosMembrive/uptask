@@ -1,10 +1,14 @@
 import { Fragment } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
+import { useNavigate} from "react-router-dom";
 
 export default function EditTaskModal() {
+
+    const navigate = useNavigate();
+
     return (
         <Transition appear show={true} as={Fragment}>
-            <Dialog as="div" className="relative z-10" onClose={() => {} }>
+            <Dialog as="div" className="relative z-10" onClose={() => navigate(location.pathname, {replace:true})}>
                 <Transition.Child
                     as={Fragment}
                     enter="ease-out duration-300"
