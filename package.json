@@ -3,6 +3,7 @@
     "colors": "^1.4.0"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express-validator": "^7.2.0"
   }
 }
