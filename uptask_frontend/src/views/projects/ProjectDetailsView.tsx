@@ -1,0 +1,47 @@
+import {Navigate, useNavigate, useParams} from 'react-router-dom';
+import {useQuery} from '@tanstack/react-query';
+import {getProjectsById} from "@/api/ProjectApi.ts";
+import AddTaskModal from "@/components/Task/AddTaskModal.tsx";
+import TaskList from "@/components/Task/TaskList.tsx";
+
+
+export default function ProjectDetailsView(){
+
+    const navigate = useNavigate();
+
+    const params = useParams();
+    const projectId = params.projectId!;
+    const { data, isLoading, isError } = useQuery({
+        queryKey: ['editProject', projectId],
+        queryFn: ()=> getProjectsById(projectId),
+        retry: false
+    });
+
+    if(isLoading) return 'Loading...';
+
+    if(isError) return <Navigate to={'/404'}/>;
+
+    if(data) return (
+        <>
+            <h1 className={"text-5xl font-black"}>Project name: { data.projectName}</h1>
+            <p className={"text-2xl font-light text-gray-500 mt-5"}> {data.description}</p>
+
+            <nav className={"my-5 flex gap-3"}>
+                <button
+                    type={"button"}
+                    className={"bg-purple-500 hover:bg-purple-600 px-10 py-3" +
+                    " text-white text-xl font-bold cursor-pointer transition-colors rounded-2xl"}
+                    onClick={()=> navigate(location.pathname + '?newTask=true')}
+                >
+                    Add a task
+                </button>
+
+            </nav>
+            <TaskList
+                tasks={data.tasks}
+            />
+            <AddTaskModal/>
+        </>
+    );
+}
+
